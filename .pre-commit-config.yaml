@@ -29,6 +29,7 @@ repos:
     rev: v1.0.1
     hooks:
       - id: mypy
+        args: ["--config-file=pyproject.toml"]  # Explicitly specify the config file
         additional_dependencies:
           - articat==0.1.14
           - hypothesis==6.98.15

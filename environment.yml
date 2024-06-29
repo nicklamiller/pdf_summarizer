@@ -1,0 +1,8 @@
+name: pdf_summarizer
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pip:
+    - llama-index-llms-ollama==0.1.5
+    - ollama==0.2.1

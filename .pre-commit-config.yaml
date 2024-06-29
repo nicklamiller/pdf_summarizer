@@ -1,15 +1,57 @@
-fail_fast: true
+default_language_version:
+  python: python3.11
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v3.2.0
+    rev: v4.5.0
     hooks:
-      - id: trailing-whitespace
-      - id: end-of-file-fixer
-      - id: check-yaml
-      - id: check-added-large-files
-      - id: check-json
       - id: check-merge-conflict
-      - id: check-symlinks
-      - id: check-toml
-      - id: check-xml
+      - id: debug-statements
       - id: mixed-line-ending
+      - id: check-case-conflict
+      - id: check-yaml
+      - id: end-of-file-fixer
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.3.1
+    hooks:
+      - id: ruff
+        args: ["--fix"]
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 24.2.0
+    hooks:
+      # black-jupyter runs black on both python files and jupyter notebooks
+      - id: black-jupyter
+  - repo: https://github.com/sqlfluff/sqlfluff
+    rev: 2.3.5
+    hooks:
+      - id: sqlfluff-fix
+  - repo: https://github.com/pre-commit/mirrors-mypy
+    # TODO: update mypy version
+    rev: v1.0.1
+    hooks:
+      - id: mypy
+        additional_dependencies:
+          - articat==0.1.14
+          - hypothesis==6.98.15
+          - numpy==1.26.4
+          - nxontology==0.5.0
+          - pandas==2.2.1
+          - pyspark==3.5.0
+          - pyspark-gcs==2.2.6.1
+          - traitlets>=5.14.1
+          - types-PyYAML==6.0.12.12
+  - repo: https://github.com/nbQA-dev/nbQA
+    rev: 1.6.3
+    hooks:
+      - id: nbqa-mypy
+        additional_dependencies:
+          - articat==0.1.14
+          - hypothesis==6.98.15
+          - mypy==1.0.1
+          - numpy==1.26.4
+          - nxontology==0.5.0
+          - pandas==2.2.1
+          - pycountry==22.3.5
+          - pyspark==3.5.0
+          - pyspark-gcs==2.2.6.1
+          - traitlets>=5.14.1
+          - types-PyYAML==6.0.12.12

@@ -1,6 +1,6 @@
 POETRY_RUN := poetry run
-FOLDERS= cicd_template
-PROJ= cicd_template
+FOLDERS= pdf_summarizer
+PROJ= pdf_summarizer
 NC=\033[0m # No Color
 
 .PHONY: install autolint lint lint-ruff shell precommit poetry-precommit \

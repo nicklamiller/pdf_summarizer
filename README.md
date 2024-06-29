@@ -1,2 +1,2 @@
-# CICD_template
-A template for ci/cd development
+# PDF summarizer
+Summarize PDFs, more to come...

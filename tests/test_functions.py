@@ -1,6 +1,6 @@
 """This module is for testing functions in my_module."""
 
-from cicd_template import my_module
+from pdf_summarizer import my_module
 
 
 def test_function1():

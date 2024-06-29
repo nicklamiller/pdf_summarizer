@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - pypdf=4.2.0
   - pip:
     - llama-index-llms-ollama==0.1.5
     - ollama==0.2.1

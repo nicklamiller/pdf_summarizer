@@ -1,0 +1,135 @@
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+ignore = [
+    "E402",  # ignore import-at-top-of-file violations
+    "E501",  # ignore line-length violations
+    "F811",  # ignore redefinition of a function
+    "B019",  # ignore functools cache/lru_cache
+    "UP030", # allow explicit positional string formatting
+]
+select = [
+    "B",   # flake8-bugbear
+    "C",   # flake8-comprehensions
+    "C90", # mccabe
+    "E",   # pycodestyle errors
+    "F",   # pyflakes
+    "I",   # isort
+    "UP",  # pyupgrade
+    "W",   # pycode warnings
+]
+
+[tool.ruff.lint.mccabe]
+max-complexity = 20
+
+[tool.pytest.ini_options]
+addopts = "--ignore local"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+pretty = true
+show_error_context = true
+plugins = "numpy.typing.mypy_plugin"
+
+[[tool.mypy.overrides]]
+module = ["*.tests.*", "conftest"]
+disallow_incomplete_defs = false
+disallow_untyped_defs = false
+disallow_untyped_decorators = false
+disallow_untyped_calls = false
+
+[[tool.mypy.overrides]]
+module = ["llama_index.llms.ollama.*", "pypdf.*"]
+ignore_missing_imports = true
+
+[tool.sqlfluff.core]
+dialect = "bigquery"
+templater = "python"
+output_line_length = 88
+# L031 - Exclude rule requiring fully-qualified table names in joins
+#        should have been disabled for BigQuery already
+# L036 - multiple SELECT columns can appear on the SELECT line
+# L051 - Exclude rule requiring INNER JOIN rather than just JOIN
+# L003 - Ignore whitespace problems for now
+# L034 - Don't move around columns
+# L016 - Long lines are fine
+# L009 - No need for a single newline at end of file
+# L008 - No need for spaces around commas
+# L014 - Keep capitalisation of the identifiers
+# L057 - Allow special characters in identifiers (BQ ref)
+exclude_rules = "L051,L031,L036,L003,L034,L016,L009,L008,L046,L014,L057,L032,L027"
+# sqlfluff is ignoring jinja sql.j2 files even tho we explicitly add
+# sql.j2 suffix here, this is probably because the templater is python.
+sql_file_exts = ".sql,.sql.j2"
+# without verbose = 3, sqlfluff doesn't show the actual violations
+# unfortunately, verbose = 3 also shows a lot of debugging output along with the violation.
+verbose = 2
+
+[tool.sqlfluff.rules.convention.select_trailing_comma]
+select_clause_trailing_comma = "require" # CV03 / L038
+[tool.sqlfluff.rules.capitalisation.keywords]
+capitalisation_policy = "upper"
+[tool.sqlfluff.rules.capitalisation.functions]
+extended_capitalisation_policy = "upper"
+[tool.sqlfluff.rules.capitalisation.literals]
+capitalisation_policy = "upper"
+[tool.sqlfluff.rules.capitalisation.types]
+extended_capitalisation_policy = "upper"
+
+[tool.sqlfluff.templater.python.context]
+# This is annoying, see: https://github.com/sqlfluff/sqlfluff/issues/3040
+clauses_dict = "clauses_dict"
+clinvar_pmid = "clinvar_pmid"
+concept_pub = "concept_pub"
+current_year = "2023"
+dev_status_predictions_tbl = "dev_status_predictions_tbl"
+disease_entity = "disease_entity"
+disease_surface = "disease_surface"
+dy_features_except = "dy_features_except"
+dy_features_tbl = "dy_features_tbl"
+efo_terms = "efo_terms"
+efo_propagation = "efo_propagation"
+efo_pruning = "efo_pruning"
+efo_surface = "efo_surface"
+efo_to_ta_cols_tbl = "efo_to_ta_cols_tbl"
+ensembl_genes = "ensembl_genes"
+entity_concept_pub = "entity_concept_pub"
+entity_embeddings = "entity_embeddings"
+entity_entity_concept_pub = "entity_entity_concept_pub"
+entity_pub_base = "entity_pub_base"
+entity_pub_raw = "entity_pub_raw"
+gdy_entities_filtered = "gdy_entities_filtered"
+gdy_features_except = "gdy_features_except"
+gdy_features_tbl = "gdy_features_tbl"
+gdy_genetics = "gdy_genetics"
+gdy_metrics = "gdy_metrics"
+gdy_predictions = "gdy_predictions"
+gdy_pubs_background = "gdy_pubs_background"
+gdy_pubs_enrichment = "gdy_pubs_enrichment"
+gene_surface = "gene_surface"
+google_patents = "google_patents"
+gy_features_except = "gy_features_except"
+gy_features_tbl = "gy_features_tbl"
+gy_metrics = "gy_metrics"
+journal_details = "journal_details"
+lookback_points = "1, 3, 5"
+mesh_comentions_table = "mesh_comentions_table"
+mesh_descriptor = "mesh_descriptor"
+mesh_descriptor_table = "mesh_descriptor_table"
+mesh_mentions_table = "mesh_mentions_table"
+mesh_term_sets_table = "mesh_term_sets_table"
+min_publications = "min_publications"
+ocid_tbl = "ocid_tbl"
+openalex_works = "openalex_works"
+ot_literature_match = "ot_literature_match"
+pmdb_journal_tbl = "pmdb_journal_tbl"
+pmdb_mesh_descriptor = "pmdb_mesh_descriptor"
+publication_dates = "publication_dates"
+publication_info = "publication_info"
+pubmed_reviews = "pubmed_reviews"
+review_papers_ref = "review_papers_ref"
+rs_mesh_keywords = "rs_mesh_keywords"
+rs_mesh_term_sets = "rs_mesh_term_sets"
